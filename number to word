@@ -1,0 +1,48 @@
+public class practice {
+    private static final String[] units = {
+        "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+        "seventeen", "eighteen", "nineteen"
+    };
+
+    private static final String[] tens = {
+        "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+    };
+
+    public static String numberToWords(int num) {
+        if (num == 0) {
+            return "zero";
+        }
+        return convert(num).trim();
+    }
+
+    private static String convert(int num) {
+        if (num < 20) {
+            return units[num] + " ";
+        } else if (num < 100) {
+            return tens[num / 10] + " " + convert(num % 10);
+        } else if (num < 1000) {
+            String result = units[num / 100] + " hundred";
+            if (num % 100 != 0) {
+                result += " and " + convert(num % 100).trim();
+            }
+            return result;
+        } else if (num < 10000) {
+            String result = units[num / 1000] + " thousand";
+            if (num % 1000 != 0) {
+                result += " " + convert(num % 1000).trim();
+            }
+            return result;
+        } else {
+            return "Number out of range (0-9999 only)";
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] testNumbers = {110, 25, 7, 300, 999, 1000, 1500, 2001, 9999};
+        for (int num : testNumbers) {
+            String words = numberToWords(num);
+            System.out.println(num + " => " + words);
+        }
+    }
+}
